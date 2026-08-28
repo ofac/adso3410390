@@ -24,11 +24,17 @@ body {
         position: fixed;
         top: 8px;
         transform: scale(.8);
-        transition: all 0.4s ease-in;
+        transition: transform 0.4s ease-in,
+                    opacity 0.4s 0.4s ease-in;
         width: 40px;
         &:hover {
             transform: scale(1.1);
             opacity: 1;
+        }
+        a:is(:link, :visited) {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
 
@@ -68,7 +74,7 @@ body {
     main {
         background: linear-gradient(to bottom, #0009, #0000);
         border-radius: 0.4rem;
-        min-width: 380px;
+        max-width: 380px;
         padding: 1rem;
     }
     /* Main Menu */
@@ -130,7 +136,8 @@ body {
                     display: flex;
                     padding: 0.6rem;
                     text-decoration:none;
-                    transition: all 0.4s ease-in;
+                    transition: transform 0.4s ease-in,
+                                background 0.4s 0.2s ease-in;
                     width: 320px;
                     &:is(:hover) {
                         background-color: crimson;
