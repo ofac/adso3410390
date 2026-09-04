@@ -76,6 +76,14 @@ body {
         border-radius: 0.4rem;
         max-width: 380px;
         padding: 1rem;
+
+        section {
+            background-color: #000;
+            border-radius: 0.4rem;
+            margin: 2rem auto;
+            padding: 0.4rem;
+        }
+
     }
     /* Main Menu */
     &.mainmenu {
