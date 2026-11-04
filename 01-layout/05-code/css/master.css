@@ -148,6 +148,7 @@ body {
             }
 
             img.logo-full {
+                transition: height 0.4s ease;
                 height: 310px;
             }
 
@@ -184,7 +185,69 @@ body {
 
         }
 
+        /* Shared carousel: each section sets --cards-visible, --card-gap and --card-max-width */
+        div.carousel-container {
+            box-sizing: border-box;
+            max-width: calc(var(--cards-visible) * var(--card-max-width) + (var(--cards-visible) - 1) * var(--card-gap) + 5.2rem);
+            padding: 0 1.2rem;
+            position: relative;
+            width: 100%;
+
+            .nav-btn {
+                align-items: center;
+                background: var(--color-capuccino);
+                border: none;
+                border-radius: 50%;
+                color: white;
+                cursor: pointer;
+                display: none;
+                font-size: 18px;
+                height: 40px;
+                justify-content: center;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 40px;
+                z-index: 10;
+
+                &:hover {
+                    background: var(--color-expresso);
+                }
+            }
+
+            .prev-btn { left: 0; }
+            .next-btn { right: 0; }
+        }
+
+        div.carousel {
+            align-items: center;
+            box-sizing: border-box;
+            display: flex;
+            gap: var(--card-gap);
+            overflow-x: auto;
+            padding: 1.4rem;
+            scroll-behavior: smooth;
+            scroll-padding-inline: 1.4rem;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            > figure {
+                flex: 0 0 calc((100% - (var(--cards-visible) - 1) * var(--card-gap)) / var(--cards-visible));
+                margin: 0;
+                min-width: 0;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+            }
+        }
+
         section#competitors {
+            --cards-visible: 4;
+            --card-gap: 1.4rem;
+            --card-max-width: 300px;
             align-items: center;
             background: url(../images/bg-competitors.png) no-repeat center /cover;
             display: flex;
@@ -215,14 +278,10 @@ body {
                 opacity: .5;
             } */
 
-            div.cards {
-                align-items: center;
-                display: flex;
-                justify-content: space-between;
-                gap: 2rem;
-                
+            div.carousel {
                 figure.card {
                     align-items: center;
+                    
                     background-color: #fff;
                     border-radius: 8px;
                     corner-shape: squircle;
@@ -233,7 +292,6 @@ body {
                     justify-content: center;
                     height: 440px;
                     transition: all 0.2s ease-out;
-                    width: 300px;
 
                     &:hover {
                         outline: 2px solid var(--color-capuccino);
@@ -285,15 +343,20 @@ body {
                         width: 50px;
                     }
                     p {
+                        box-sizing: border-box;
                         color: var(--color-expresso);
                         font-size: .8rem;
+                        padding-inline: .8rem;
                     }
 
                     footer.options {
                         align-items: center;
+                        box-sizing: border-box;
                         display: flex;
                         gap: 1rem;
                         justify-content: center;
+                        padding-inline: .8rem;
+                        width: 100%;
 
                         button.btn {
                             align-items: center;
@@ -304,12 +367,13 @@ body {
                             font-weight: 500;
                             corner-shape: squircle;
                             display: flex;
+                            flex: 0 1 130px;
                             height: 48px;
                             gap: 0.4rem;
                             justify-content: center;
+                            min-width: 0;
                             text-transform: uppercase;
                             transition: transform 0.2s ease-in;
-                            width: 130px;
 
                             &.btn-contact {
                                 background-color: var(--color-expresso);
@@ -424,6 +488,9 @@ body {
             }
         }
         section#schedule {
+            --cards-visible: 3;
+            --card-gap: 2rem;
+            --card-max-width: 400px;
             align-items: center;
             background: url(../images/bg-competitors.png) no-repeat center /cover;
             display: flex;
@@ -450,11 +517,6 @@ body {
             }
             
             div.days {
-                align-items: center;
-                display: flex;
-                gap: 2rem;
-                justify-content: center;
-
                 figure.day {
                     align-items: center;
                     background: linear-gradient(var(--color-capuccino) 114px, #fff 114px);
@@ -466,7 +528,6 @@ body {
                     flex-direction: column;
                     height: 440px;
                     transition: all 0.2s ease-out;
-                    width: 400px;
 
 
                     &:hover {
@@ -528,6 +589,9 @@ body {
             }
         }
         section#sponsors {
+            --cards-visible: 6;
+            --card-gap: 2.4rem;
+            --card-max-width: 180px;
             align-items: center;
             background: url(../images/bg-location.png) no-repeat center /cover;
             display: flex;
@@ -553,15 +617,33 @@ body {
                 }
             }
 
-            div {
-                align-items: center;
-                display: flex;
-                gap: 2.4rem;
-                justify-content: center;
+            /* One scroller with two rows, so gold and silver move together */
+            div.carousel.sponsors {
+                column-gap: var(--card-gap);
+                display: grid;
+                grid-auto-columns: calc((100% - (var(--cards-visible) - 1) * var(--card-gap)) / var(--cards-visible));
+                grid-auto-flow: column dense;
+                grid-template-rows: repeat(2, auto);
+                row-gap: 2rem;
+
+                div.gold,
+                div.silver {
+                    display: contents;
+                }
+
+                div.gold img {
+                    grid-row: 1;
+                }
+
+                div.silver img {
+                    grid-row: 2;
+                }
 
                 img {
+                    scroll-snap-align: start;
+                    scroll-snap-stop: always;
                     transition: transform 0.2s ease-in;
-                    width: 180px;
+                    width: 100%;
 
                     &:hover {
                         cursor: pointer;
@@ -605,6 +687,7 @@ body {
     }
 }
 
+
 /* Breakpoint: 960px */
 @media (max-width: 960px) {
     body {
@@ -612,6 +695,7 @@ body {
             header#navbar {
                 nav.options {
                     background: #000d;
+                    backdrop-filter: blur(8px);
                     position: absolute;
                     width: 100%;
                     align-items: center;
@@ -620,7 +704,7 @@ body {
                     padding-top: 2rem;
                     height: 100dvh;
                     top: 100px;
-                    left: -100dvw;
+                    left: -200dvw;
                     transition: all 1s 0.2s ease;
                     &.active {
                         left: 0px;
@@ -628,6 +712,77 @@ body {
                 }
                 button#mburger {
                     display: block;
+                }
+            }
+
+            section#about {
+                img.logo-full {
+                    height: 240px;
+                }
+
+                menu {
+                    flex-direction: column;
+                    gap: 0.8rem;
+                    a:is(:link, :visited) {
+                        width: 360px;
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+
+@media (max-width: 1200px) {
+    body {
+        main {
+            section#competitors,
+            section#schedule {
+                --cards-visible: 2;
+            }
+
+            section#sponsors {
+                --cards-visible: 3;
+            }
+
+            div.carousel-container .nav-btn {
+                display: flex;
+            }
+        }
+    }
+}
+
+@media (max-width: 640px) {
+    body {
+        main {
+            section#competitors,
+            section#schedule {
+                --cards-visible: 1;
+            }
+
+            section#sponsors {
+                --cards-visible: 2;
+            }
+        }
+    }
+}
+
+@media (max-width: 1280px) {
+    body {
+        main {
+            section#location {
+                position: relative;
+
+                h2 {
+                    font-size: 3rem;
+                }
+                div.maps {
+                    figure.map {
+                       display: none;
+                    }
+                aside.info {
+                   margin-top: 4rem;
                 }
             }
         }
