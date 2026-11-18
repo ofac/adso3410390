@@ -70,6 +70,48 @@ body {
             }
          }
     }
+    &.mainmenu.javascript {
+         background: linear-gradient(45deg, #f7df1e, black);
+         main {
+            header {
+                h1 {
+                    margin: 0;
+                }
+                h3 {
+                    font-weight: 200;
+                }
+                img {
+                    background-color: #0003;
+                }
+            }
+            menu {
+                gap: 0.4rem;
+                a:is(:link, :visited) {
+                    span {
+                        background-color: #f7df1e;
+                        color: #333;
+                    }
+                    aside {
+                        h3 {
+                            font-size: 1rem;
+                        }
+                    }
+                    &:is(:hover) {
+                        background-color: #f7df1e;
+                        color: #333;
+                        span {
+                            color: #fff;
+                        }
+                        aside {
+                            small {
+                                color: #333;
+                            }
+                        }
+                    }
+                }
+            }
+         }
+    }
 
     main {
         background: linear-gradient(to bottom, #0009, #0000);
